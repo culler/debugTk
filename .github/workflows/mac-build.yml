@@ -25,21 +25,10 @@ jobs:
           repository: tcltk/tcl
           ref: core-8-6-branch
           path: tcl
-      - name: Build Tcl
+      - name: Build Tcl and Tk
         run: |
-          pwd
-          ls
-          cd tcl
-          make -C macosx
-        working-directory: . 
-      - name: Build Tk
-        run: |
-          pwd
-          ls
-          cd tk
-          touch generic/tkStubInit.c
-          make -C macosx
-        working-directory: . 
+          make all
+        working-directory: tcl/macosx 
       - name: Run Tests
         run: |
           cd tk
