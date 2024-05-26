@@ -25,13 +25,15 @@ jobs:
           repository: tcltk/tcl
           ref: core-8-6-branch
           path: tcl
+        working directory: .
       - name: Prepare checked out repositories
         run: |
+          ls .
           ls tk
           touch tk/generic/tkStubInit.c
-          mkdir build
-          echo "BUILD_DIR=`cd build && pwd`" >> $GITHUB_ENV
-          echo "DESTDIR=`cd build && pwd`" >> $GITHUB_ENV
+          #mkdir build
+          #echo "BUILD_DIR=`cd build && pwd`" >> $GITHUB_ENV
+          #echo "DESTDIR=`cd build && pwd`" >> $GITHUB_ENV
         working-directory: .
       - name: Build Tcl and Tk
         run: |
