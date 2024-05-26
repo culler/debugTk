@@ -35,15 +35,17 @@ jobs:
           #mkdir build
           #echo "BUILD_DIR=`cd build && pwd`" >> $GITHUB_ENV
           #echo "DESTDIR=`cd build && pwd`" >> $GITHUB_ENV
-        working-directory: .
+        working-directory: . 
       - name: Build Tcl and Tk
         run: |
           make -C tcl/macosx
           make -C tk/macosx
+        working-directory: . 
       - name: Run Tests
         run: |
           cd tk
           make -C tk/macosx TESTFLAGS="-verbose bpest" test | tee out.txt
+        working-directory: . 
       - name: Upload crash reports
         uses: actions/upload-artifact@v3
         with:
