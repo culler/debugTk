@@ -25,10 +25,9 @@ jobs:
           repository: tcltk/tcl
           ref: core-8-6-branch
           path: tcl
-        working-directory: .
       - name: Prepare checked out repositories
         run: |
-          ls .
+          find . -name tcl
           ls tk
           touch tk/generic/tkStubInit.c
           #mkdir build
