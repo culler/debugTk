@@ -1,4 +1,5 @@
-cd tcl8.6
+set -e
+cd tcl
 make -C macosx
-cd ../tk8.6
+cd ../tk
 make -C macosx
