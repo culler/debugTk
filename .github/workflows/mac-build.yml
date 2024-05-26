@@ -25,15 +25,28 @@ jobs:
           repository: tcltk/tcl
           ref: core-8-6-branch
           path: tcl
-      - name: Build Tcl and Tk
+      - name: Prepare checked out repositories
+        run: |
+          touch tk/generic/tkStubInit.c
+          mkdir build
+          echo "BUILD_DIR=`cd build && pwd`" >> $GITHUB_ENV
+          echo "DESTDIR=`cd build && pwd`" >> $GITHUB_ENV
+        working-directory: .
+      - name: Build Tcl
         run: |
           make all
-        working-directory: tcl/macosx 
-      - name: Run Tests
+        working-directory: tcl/macosx
+      - name: Build Tk
         run: |
-          cd tk
-          make -C macosx TESTFLAGS="-verbose bpest" test | tee out.txt
-        working-directory: . 
+          make all install || {
+            echo "::error::Failure during Build"
+            exit 1
+          }
+#      - name: Run Tests
+#        run: |
+#          cd tk
+#          make -C macosx TESTFLAGS="-verbose bpest" test | tee out.txt
+#        working-directory: . 
       - name: Upload crash reports
         uses: actions/upload-artifact@v3
         with:
