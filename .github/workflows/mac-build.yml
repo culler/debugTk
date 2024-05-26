@@ -27,7 +27,9 @@ jobs:
           path: tcl
       - name: Prepare checked out repositories
         run: |
-          find . -name tcl
+          echo "Tcl:"
+          ls tcl
+          echo "Tk:"
           ls tk
           touch tk/generic/tkStubInit.c
           #mkdir build
@@ -36,14 +38,12 @@ jobs:
         working-directory: .
       - name: Build Tcl and Tk
         run: |
-          cd tcl
-          make -C macosx
-          cd ../tk
-          make -C macosx
+          make -C tcl/macosx
+          make -C tk/macosx
       - name: Run Tests
         run: |
           cd tk
-          make TESTFLAGS="-verbose bpest" test | tee out.txt
+          make -C tk/macosx TESTFLAGS="-verbose bpest" test | tee out.txt
       - name: Upload crash reports
         uses: actions/upload-artifact@v3
         with:
