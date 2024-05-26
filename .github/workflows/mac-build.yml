@@ -35,13 +35,14 @@ jobs:
       - name: Build Tcl
         run: |
           make all
-        working-directory: tcl/macosx
+        working-directory: tcl/macosx 
       - name: Build Tk
         run: |
           make all install || {
             echo "::error::Failure during Build"
             exit 1
           }
+        working-directory: tk/macosx 
       - name: Run Tests
         run: |
           make TESTFLAGS="-verbose bpest" test | tee out.txt
