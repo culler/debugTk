@@ -27,24 +27,21 @@ jobs:
           path: tcl
       - name: Prepare checked out repositories
         run: |
+          ls tk
           touch tk/generic/tkStubInit.c
           mkdir build
           echo "BUILD_DIR=`cd build && pwd`" >> $GITHUB_ENV
           echo "DESTDIR=`cd build && pwd`" >> $GITHUB_ENV
         working-directory: .
-      - name: Build Tcl
+      - name: Build Tcl and Tk
         run: |
-          make all
-        working-directory: tcl/macosx 
-      - name: Build Tk
-        run: |
-          make all install || {
-            echo "::error::Failure during Build"
-            exit 1
-          }
-        working-directory: tk/macosx 
+          cd tcl
+          make -C macosx
+          cd ../tk
+          make -C macosx
       - name: Run Tests
         run: |
+          cd tk
           make TESTFLAGS="-verbose bpest" test | tee out.txt
       - name: Upload crash reports
         uses: actions/upload-artifact@v3
